@@ -1,0 +1,12 @@
+/** Basic config file **/
+
+configuration {
+  show-icons:         true;
+  icon-theme:         "Papirus";
+  display-drun:       "  ";
+  display-window:     "Windows";
+  modi:               "window,drun,";
+  font:               "JetBrainsMono Nerd Font 12";
+}
+
+@theme "customs/custom1.rasi"

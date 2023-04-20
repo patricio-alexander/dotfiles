@@ -1,0 +1,39 @@
+#!/usr/bin/python3
+
+from subprocess import Popen, PIPE, run
+from pathlib import Path
+import os
+
+
+
+rofi_conf_dir = "/home/patricio/.config/qtile/rofi/wallpapers_set"
+theme_rofi = "style-7"
+wallpapers_dir = Path(Path.home(), "Images", "wallpapers")
+autostart_file = Path(Path.home(), ".config", "qtile", "autostart.sh")
+# autostart_file = "/home/patricio/.config/qtile/test.txt"
+
+def change_wallpaper(selected):
+    if selected != "":
+        run(["feh", "--bg-fill", wallpapers_dir / selected])
+        run(["dunstify", "  Fondo cambiado correctamente"])
+        
+        wallpaper_selected = f"feh --bg-fill {wallpapers_dir}/{selected}" 
+        with open(autostart_file, "r") as file:
+           text = file.readlines()
+        with open(autostart_file, "w") as file:
+           for each_line in text:
+               file.write(wallpaper_selected) if "feh" in each_line else file.write(each_line) 
+
+
+
+def run_rofi():
+    with Popen(["rofi", "-dmenu", "-theme", f"{rofi_conf_dir}/{theme_rofi}"], stdout=PIPE, stdin=PIPE) as rofi:
+        wallps = os.listdir(wallpapers_dir)
+        selected = rofi.communicate("\n".join(wallps).encode("utf-8"))[0].decode("utf-8")
+        change_wallpaper(selected.strip())
+        
+
+
+
+if __name__ == "__main__":
+    run_rofi()

@@ -1,0 +1,20 @@
+
+# Ignore everything
+/*
+
+!.gitignore
+!.gitmodules
+
+
+# Except for the files and folders we want to track
+!README.md
+!.screenshots
+!.zshrc
+!.xprofile
+!.Xresources
+!.config
+!.local
+!qtile
+!alacritty
+!neofetch
+!starship

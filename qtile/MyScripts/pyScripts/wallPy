@@ -1,0 +1,54 @@
+#!/usr/bin/python3
+
+import argparse
+import subprocess
+import os
+
+autostart_file = "/home/patricio/.config/qtile/autostart.sh"
+#autostart_file = "/home/patricio/test.txt"
+path_wallpapers = "/home/patricio/Images/wallpapers"
+
+new_wallpaper = "empty"
+
+
+
+def change_wallpaper():
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-w", "--wallpaper", help="insert the wallpaper name", default="empty")
+    parser.add_argument("-l", "--list_wallpapers", help="list wallpapers, insert list like arg", default="empty")
+    args = parser.parse_args()
+
+    if args.wallpaper == "empty" and args.list_wallpapers == "empty":
+        return print("\x1b[1;33m","For help insert the --help flag") 
+
+    if args.wallpaper != "empty":
+        subprocess.run(["feh", "--bg-fill", f"{path_wallpapers}/{args.wallpaper}"], text=True)
+        global new_wallpaper
+        new_wallpaper = f"feh --bg-fill Imágenes/wallpapers/{args.wallpaper}\n"
+        print("\033[1;32m","Has cambiado de fondo de pantalla correctamente")
+
+ 
+
+    if args.list_wallpapers != "empty" and args.list_wallpapers == "list":
+        wallps = os.listdir(path_wallpapers)
+        for each_wallpapers in wallps: 
+            print("\x1b[1;33m  ", each_wallpapers)
+
+
+    
+    
+
+
+def open_file():
+    if new_wallpaper != "empty":
+        with open(autostart_file, "r") as file:
+            file_lines = file.readlines()
+        with open(autostart_file, "w") as file:
+            for each_line in file_lines:
+                file.write(new_wallpaper)  if "feh" in each_line else file.write(each_line) 
+                 
+
+if __name__ == "__main__":
+    change_wallpaper()
+    open_file()
