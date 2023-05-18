@@ -50,9 +50,6 @@ sudo pacman -S rofi
 # Network
 
 To connect to a network you can use `nmcli`, but you must first install it in case you don't have it on your pc
-```bash
-pacman -S networkmanager
-```
 
 Once done do the following
 
